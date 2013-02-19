@@ -24,6 +24,7 @@
         <td width="20%">
             <ul>
                 <li><a href="<%=request.getContextPath()%>/content/listarPlantillas.jsp">Listado de Plantillas</a></li>
+                <li><a href="<%=request.getContextPath()%>/content/listarProductos.jsp">Listado de Productos</a></li>
             </ul>
         </td>
         <td width="70%">

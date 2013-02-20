@@ -28,23 +28,30 @@
 <ul>
     <%
         CotType type = CotType.getCotType(Integer.parseInt(cot));
-        //Listar todas las plantillas de una categori
+        TemplateList list = TemplateList.Impl.getByCategory(type);
+        for (Template template : list) {
     %>
-    <li> <%-- Mostrar el nombre de la plantilla y su etiqueta --%>
+    <li><%=template.getLabel()%> (<%=template.getName()%>)
+    <ul>
+<%
+    List<Property> properties = template.properties();
+    for (Property property : properties) {
+%>
+    <li><%=property.getDescription()%>
         <ul>
-            <%
-                //Listar las propiedades de la plantilla
-            %>
-            <li> <%-- Mostrar el nombre de la propiedad --%>
-                <ul>
-                    <li>Etiqueta:</li>
-                    <li>Formula:</li>
-                    <li>Tipo Presentacion:</li>
-                </ul>
-            </li>
+            <li>Etiqueta: <%=property.getEtiqueta()%></li>
+            <li>Formula: <%=property.getFormula()%></li>
+            <li>Tipo Presentacion: <%=property.getTipoPresentador().getTipo()%></li>
         </ul>
     </li>
-</ul>
 <%
     }
+%>
+    </ul>
+    </li>
+    <%
+        }
+    %>
+</ul>
+<% }
 %>

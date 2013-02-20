@@ -6,7 +6,8 @@
 </head>
 <body>
 <%
-    String contentToInclude = (String) request.getAttribute("content");
+    String contentToInclude = (String) request.getParameter("content");
+
 
     User user = (User) session.getAttribute("user");
     if (request.getParameter("errorCode") != null) {
@@ -21,10 +22,11 @@
 <h1>Ejemplos de OpenAPI</h1>
 <table border="1" width="90%">
     <tr>
-        <td width="20%">
+        <td width="20%" style="vertical-align: text-top">
             <ul>
-                <li><a href="<%=request.getContextPath()%>/content/listarPlantillas.jsp">Listado de Plantillas</a></li>
-                <li><a href="<%=request.getContextPath()%>/content/listarProductos.jsp">Listado de Productos</a></li>
+                <li><a href="?content=/content/listarPlantillas.jsp">Listado de Plantillas</a></li>
+                <li><a href="?content=/content/listarProductos.jsp">Listado de Productos</a></li>
+                <li><a href="?content=/content/consultarPoliza.jsp">Listado de Polizas</a></li>
             </ul>
         </td>
         <td width="70%">

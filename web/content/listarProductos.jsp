@@ -3,7 +3,7 @@
 <%@ page import="com.consisint.acsele.openapi.product.Product" %>
 <%@ page import="com.consisint.acsele.openapi.policy.Event" %>
 <%@ page import="java.util.List" %>
-<form method="GET">
+<form method="POST">
     <select name="productId">
         <%
             ProductList productsActives = ProductList.Impl.getProductsActives();

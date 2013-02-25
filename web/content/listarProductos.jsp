@@ -3,6 +3,7 @@
 <%@ page import="com.consisint.acsele.openapi.product.Product" %>
 <%@ page import="com.consisint.acsele.openapi.policy.Event" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.consisint.acsele.openapi.policy.Plan" %>
 <form method="POST">
     <select name="productId">
         <%

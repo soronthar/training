@@ -27,6 +27,7 @@
                 <li><a href="?content=/content/listarPlantillas.jsp">Listado de Plantillas</a></li>
                 <li><a href="?content=/content/listarProductos.jsp">Listado de Productos</a></li>
                 <li><a href="?content=/content/consultarPoliza.jsp">Listado de Polizas</a></li>
+                <li><a href="?content=/content/verExtraccion.jsp">Ver Extraccion</a></li>
             </ul>
         </td>
         <td width="70%">

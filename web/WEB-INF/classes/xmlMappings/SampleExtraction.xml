@@ -1,0 +1,143 @@
+<Report name="SampleExtraction">
+    <Provider name="training.efw.SampleProvider"/>
+
+    <Primitive name="VisibleValue" value="4"/>
+
+    <Primitive name="DefaultValue" render="false" value="3"/>
+
+    <Primitive name="ThisIsDefaultValue" value="DefaultValue"/>
+
+    <Primitive name="EmptyValue" renderIfEmpty="false" value=""/>
+
+    <Primitive name="ValueSubTag">
+        <Value>4</Value>
+    </Primitive>
+
+    <Primitive name="WriteAmountAttribute" amountwrite="50"/>
+
+    <Primitive name="WriteAmountSubTag">
+        <AmountWrite>400</AmountWrite>
+    </Primitive>
+
+    <Primitive name="FechaReporteInicial"
+               method="getStartDate"/>
+
+    <Primitive name="FechaReporteFinal"
+               method="getFinishDate"/>
+
+    <Primitive name="AnotherEmptyValue"
+               renderIfEmpty="false"
+               method="getEmptyValue"/>
+
+    <Primitive name="NonEmptyValue"
+               renderIfEmpty="false"
+               method="getFinishDate"/>
+
+    <Primitive name="RenderedAnotherEmptyValue"
+               renderIfEmpty="true"
+               method="getEmptyValue"/>
+
+    <Primitive name="MethodSubtag">
+        <Method name="getStartDate"/>
+    </Primitive>
+
+    <Primitive name="MethodSubtagAltProvider">
+        <Method name="getStartDate"
+                provider="training.efw.AnotherSampleProvider"/>
+    </Primitive>
+
+    <Primitive name="MethodWithParameter">
+        <Method name="echo">
+            <Parameter index="1">First Param</Parameter>
+            <Parameter index="2">Second Param</Parameter>
+        </Method>
+    </Primitive>
+
+
+    <SubGroup name="SimpleSubgroup">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Primitive name="Id" method="showIds"/>
+        <Primitive name="Date" method="getStartDate"/>
+    </SubGroup>
+
+    <SubGroup name="SimpleSubgroupNoRender"
+              render="false">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Primitive name="Id" method="showIds"/>
+        <Primitive name="Date" method="getStartDate"/>
+    </SubGroup>
+
+    <SubGroup name="SimpleSubgroupNoCount"
+              counter="false">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Primitive name="Id" method="showIds"/>
+        <Primitive name="Date" method="getStartDate"/>
+    </SubGroup>
+
+    <SubGroup name="SimpleSubgroupNoRenderNoCount"
+              render="false"
+              counter="false">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Primitive name="Id" method="showIds"/>
+        <Primitive name="Date" method="getStartDate"/>
+    </SubGroup>
+
+    <SubGroup name="SimpleSubgroupWithAtts" >
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Attributes>
+            <Attribute name="Date" method="getStartDate"/>
+        </Attributes>
+        <Primitive name="Id" method="showIds"/>
+    </SubGroup>
+
+    <SubGroup name="SimpleSubgroupDifferentProvider"
+              provider="training.efw.AnotherSampleProvider">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <Primitive name="Id">
+            <Method name="showIds"
+                    provider="training.efw.SampleProvider"/>
+        </Primitive>
+
+        <Primitive name="Date" method="getStartDate"/>
+    </SubGroup>
+
+    <SubGroup name="SubgroupWithTotalizersAndCounts">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+
+        <Primitive name="Id" method="getId" />
+        <Totalize name="IdTotal" primitive="Id" />
+        <Count name="IdCount" primitive="Id" />
+    </SubGroup>
+
+    <Primitive name="PrimitiveWithTotalize" value="IdTotal" />
+
+
+    <SubGroup name="OuterSubgroup">
+        <Load>
+            <Method name="loadSomeIds"/>
+        </Load>
+        <SubGroup name="InnerSubgroup">
+            <Load>
+                <Method name="loadSomeIds" provider="training.efw.AnotherSampleProvider" />
+            </Load>
+            <Primitive name="Id" method="showIds" />
+        </SubGroup>
+        <Primitive name="Id" method="showIds"/>
+
+    </SubGroup>
+
+</Report>

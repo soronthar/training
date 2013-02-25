@@ -1,6 +1,7 @@
 package training.init;
 
 import com.consisint.acsele.Acsele;
+import com.consisint.acsele.util.AcseleConf;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -23,6 +24,7 @@ public class TrainingContextListener  implements ServletContextListener {
 
         //Inicializa Acsel-e, asumiendo la instancia CONSIS
         new Acsele("CONSIS",prefix);
+        AcseleConf.setFixedPaths("C:/test/");
     }
 
     @Override

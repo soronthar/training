@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page import="com.consisint.acsele.template.api.TipoPresentador" %>
 <%@ page import="com.consisint.acsele.util.AcseleConf" %>
 <%@ page import="com.consisint.acsele.openapi.product.Product" %>
@@ -8,7 +7,7 @@
 <%@ page import="com.consisint.acsele.openapi.thirdParty.ThirdParty" %>
 
 
-<form method="post">
+<form method="POST">
     Numero de Poliza: <input type="text" name="policyNumber"> <input type="submit" name="Cargar"> <br>
 
     Algunos numeros de poliza validos:
@@ -28,10 +27,10 @@
     if (numeroPoliza != null) {
         Policy policy = Policy.loadByPolicyNumber(numeroPoliza);
         Product product = policy.getProduct();
-        DynamicData dynamicData = policy.getDynamicData();
-        DynamicMetaData dynamicMetaData = dynamicData.getMetaData();
+        DynamicData polDynamicData = policy.getDynamicData();
+        DynamicMetaData polDynamicMetaData = polDynamicData.getMetaData();
 
-        String tipoVigencia = dynamicData.getInput(AcseleConf.getProperty("TipVigencia"));
+        String tipoVigencia = polDynamicData.getInput(AcseleConf.getProperty("TipVigencia"));
 %>
 <h1>Poliza <%=numeroPoliza%> (<%=product.getName()%>) </h1>
 
@@ -49,7 +48,7 @@ Plantila: <%=product.getPolicyTemplate().getLabel()%>
     </thead>
     <tbody>
     <%
-        Set<Map.Entry<String, Data>> entries = dynamicMetaData.getData().entrySet();
+        Set<Map.Entry<String, Data>> entries = polDynamicMetaData.getData().entrySet();
         for (Map.Entry<String, Data> entry : entries) {
             String propertyName = entry.getKey();
             Data data = entry.getValue();
@@ -59,7 +58,7 @@ Plantila: <%=product.getPolicyTemplate().getLabel()%>
     <tr>
         <th style="text-align: left"><%=data.getEtiqueta()%>
         </th>
-        <td style="text-align: left"><%=dynamicData.getInput(propertyName)%>
+        <td style="text-align: left"><%=polDynamicData.getInput(propertyName)%>
         </td>
     </tr>
     <%
@@ -82,8 +81,14 @@ Rol: <%=role.getDesc()%>
     <%
         for (Participation participation : participationsByRole) {
             ThirdParty thirdParty = participation.getThirdParty();
+
+//            thirdParty.findAllAddresses()
+//            thirdParty.listPaymentModes()
+//            thirdParty.getListRoles()
+
     %>
     <li><%=thirdParty.getName()%>
+
     </li>
     <%
         }
@@ -95,35 +100,121 @@ Rol: <%=role.getDesc()%>
 
 <%
     RiskUnitList riskUnits = policy.listRU();
+
     for (RiskUnit ru : riskUnits) {
+        DynamicData ruDynamicData = ru.getDynamicData();
+        DynamicMetaData ruDynamicMetaData = ruDynamicData.getMetaData();
 %>
 <h2>Unidad de Riesgo <%=ru.getId()%>
 </h2>
 <b>Datos de la Unidad de Riesgo</b>
 Vigencia desde <%=ru.getInitialDate()%> hasta <%=ru.getEndDate()%>
 <br>
-<b>Tareas:</b>
-<ul>
-    <li>Mostrar los datos de la unidad de riesgo. es una tabla analoga a la de la poliza</li>
-</ul>
-<br>
+Plantila: <%=product.getRiskUnit()%>
+<table border=1>
+    <thead>
+    <tr>
+        <th>Propiedad</th>
+        <th>Valor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+        Set<Map.Entry<String, Data>> ruEntries = ruDynamicMetaData.getData().entrySet();
+        for (Map.Entry<String, Data> entry : ruEntries) {
+            String propertyName = entry.getKey();
+            Data data = entry.getValue();
+            if (!data.getTipoPresentador().equals(TipoPresentador.TAB) &&
+                    !data.getTipoPresentador().equals(TipoPresentador.LABEL)) {
+    %>
+    <tr>
+        <th style="text-align: left"><%=data.getEtiqueta()%>
+        </th>
+        <td style="text-align: left"><%=ruDynamicData.getInput(propertyName)%>
+        </td>
+    </tr>
+    <%
+            }
+        }
+    %>
+    </tbody>
+</table>
 
-<h3>Objetos Asegurados</h3>
-<br>
-<b>Tareas:</b>
-<ul>
-    <li>Listar los objetos asegurados de la unidad de riesgo, mostrando la descripcion y el plan
-    <li>Mostrar los datos de cada objeto asegurado.
-    <li>Mostrar las participaciones de cada objeto asegurado.
-    <li>Mostrar las coberturas del objeto asegurado (solo la descripcion.
-</ul>
+<%
+    InsuranceObjectList ioList = ru.listIO();
 
+    for (InsuranceObject io : ioList) {
+        DynamicData ioDynamicData = io.getDynamicData();
+        DynamicMetaData ioDynamicMetaData = ioDynamicData.getMetaData();
+%>
+<h3><%=io.getDesc()%>
+</h3>
+<b>Datos del Objeto Asegurado</b>
+Vigencia desde <%=io.getInitialDate()%> hasta <%=io.getEndDate()%>
+<br>
+Plantila: <%=ioDynamicMetaData.getTemplate().getLabel()%>
+<table border=1>
+    <thead>
+    <tr>
+        <th>Propiedad</th>
+        <th>Valor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+        Set<Map.Entry<String, Data>> ioEntries = ioDynamicMetaData.getData().entrySet();
+        for (Map.Entry<String, Data> entry : ioEntries) {
+            String propertyName = entry.getKey();
+            Data data = entry.getValue();
+            if (!data.getTipoPresentador().equals(TipoPresentador.TAB) &&
+                    !data.getTipoPresentador().equals(TipoPresentador.LABEL)) {
+    %>
+    <tr>
+        <th style="text-align: left"><%=data.getEtiqueta()%>
+        </th>
+        <td style="text-align: left"><%=ioDynamicData.getInput(propertyName)%>
+        </td>
+    </tr>
+    <%
+            }
+        }
+    %>
+    </tbody>
+</table>
+<b>Participaciones</b>
+<ul>
+    <%
+        List<Participation> ioParticipations = io.listParticipations();
+        for (Participation participation : ioParticipations) {
+            ThirdParty thirdParty = participation.getThirdParty();
+    %>
+    <li><%=thirdParty.getName()%>
+    </li>
+    <%
+
+        }
+    %>
+</ul>
 <h4>Coberturas</h4>
+
 <ul>
-    <li>Cobertura A</li>
-    <li>Cobertura B</li>
-    <li>Cobertura C</li>
+    <%
+        List<Coverage> coverages = io.listCoverages();
+        for (Coverage cov : coverages) {
+    %>
+    <li><%=cov.getDesc()%>
+    </li>
+
+    <%
+        }
+    %>
 </ul>
+
+<%
+    }
+%>
+
+
 <%
     }
 %>

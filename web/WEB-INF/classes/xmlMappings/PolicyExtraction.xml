@@ -1,14 +1,41 @@
 <Report name="PolicyExtraction">
- <Provider name="training.efw.PolicyProvider"/>
+    <Provider name="training.efw.PolicyProvider"/>
     <SubGroup name="Poliza" render="false" counter="false">
-        <Load><Method name="loadPolicyIds"/></Load>
-        <Primitive name="NumeroPoliza" method="getPolicyNumber" />
+        <Load>
+            <Method name="loadPolicyIds"/>
+        </Load>
+        <Primitive name="NumeroPoliza" method="getPolicyNumber"/>
         <SubGroup name="Datos" render="false" counter="false">
-            <Load><Method name="loadEmpty"/> </Load>
+            <Load>
+                <Method name="loadEmpty"/>
+            </Load>
             <SubGroup name="Propiedad" render="false" counter="false">
-                  <Load><Method name="loadPolicyProperties"/></Load>
-                <Primitive name="Propiedad" method="getPolicyPropertyName" />
-                <Primitive name="Valor" method="getPolicyPropertyValue" />
+                <Load>
+                    <Method name="loadPolicyProperties"/>
+                </Load>
+                <Primitive name="Nombre" method="getPolicyPropertyName">
+                    <Method name="getPolicyPropertyName">
+                        <Parameter index="1">2</Parameter>
+                    </Method>
+                </Primitive>
+                <Primitive name="Valor" method="getPolicyPropertyValue"/>
+            </SubGroup>
+        </SubGroup>
+        <SubGroup name="URS" counter="false" render="false">
+            <Load><Method name="loadEmpty"/> </Load>
+            <SubGroup name="UnidadRiesgo" counter="false" render="false">
+                <Load><Method name="loadRUIds"/> </Load>
+                <SubGroup name="Datos" render="false" counter="false">
+                    <Load><Method name="loadEmpty"/> </Load>
+                    <Primitive name="ids">
+                        <Method name="showIds" provider="training.efw.SampleProvider" />
+                    </Primitive>
+                    <SubGroup name="Propiedad" render="false" counter="false">
+                        <Load><Method name="loadRUProperties"/> </Load>
+                        <Primitive name="Nombre" method="getRUPropertyName" />
+                        <Primitive name="Valor" method="getRUPropertyValue"/>
+                    </SubGroup>
+                </SubGroup>
             </SubGroup>
         </SubGroup>
     </SubGroup>

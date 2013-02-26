@@ -1,0 +1,15 @@
+<Report name="PolicyExtraction">
+ <Provider name="training.efw.PolicyProvider"/>
+    <SubGroup name="Poliza" render="false" counter="false">
+        <Load><Method name="loadPolicyIds"/></Load>
+        <Primitive name="NumeroPoliza" method="getPolicyNumber" />
+        <SubGroup name="Datos" render="false" counter="false">
+            <Load><Method name="loadEmpty"/> </Load>
+            <SubGroup name="Propiedad" render="false" counter="false">
+                  <Load><Method name="loadPolicyProperties"/></Load>
+                <Primitive name="Propiedad" method="getPolicyPropertyName" />
+                <Primitive name="Valor" method="getPolicyPropertyValue" />
+            </SubGroup>
+        </SubGroup>
+    </SubGroup>
+</Report>

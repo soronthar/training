@@ -1,0 +1,29 @@
+<PrimasPendientes>
+    <Moneda iso="Soles">
+        <Sucursal nombre="Lima">
+            <Detalle>
+                <Prima>
+                    <Poliza>AAAAA</Poliza>
+                    <Monto>200.0</Monto>
+                    <FechaVencimiento>2012-01-01</FechaVencimiento>
+                    <Asegurado>
+                        <Nombre>Rafael</Nombre>
+                        <DNI>123455</DNI>
+                    </Asegurado>
+                </Prima>
+                <Prima>
+                    <Poliza>BBBBB</Poliza>
+                    <Monto>300.0</Monto>
+                    <FechaVencimiento>2012-01-01</FechaVencimiento>
+                    <Asegurado>
+                        <Nombre>Rafael</Nombre>
+                        <DNI>123455</DNI>
+                    </Asegurado>
+                </Prima>
+            </Detalle>
+            <TotalPrimaSucursal>500</TotalPrimaSucursal>
+        </Sucursal>
+        <TotalPrimaMoneda>500</TotalPrimaMoneda>
+        <NumeroPrimas>2</NumeroPrimas>
+    </Moneda>
+</PrimasPendientes>

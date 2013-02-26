@@ -12,8 +12,8 @@
     params.put(ReportManager.Param.FINAL_DATE,"2012-11-30");
     params.put(ReportManager.Param.DIR_OUTPUT,"c:/test/");
 
-    String extraccion = manager.generatedReport("SampleExtraction", params, ReportManager.Format.XML);
-    String name=extraccion.substring(extraccion.indexOf("SampleExtraction"));
+    String extraccion = manager.generatedReport("PolicyExtraction", params, ReportManager.Format.XML);
+    String name=extraccion.substring(extraccion.indexOf("PolicyExtraction"));
     String contenido = FileUtils.readFileToString(new File("c:/test/",name));
 
 %>
